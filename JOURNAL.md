@@ -1,6 +1,6 @@
 ## Week 7 — Issue selection
 
-**Issue link:** [[paste link here](https://github.com/ascherj/pathreview/issues/128)]
+**Issue link:** [https://github.com/ascherj/pathreview/issues/128]
 
 **Issue title:** [Add a dependency vulnerability scan to the CI pipeline]
 
