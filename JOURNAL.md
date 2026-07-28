@@ -17,7 +17,7 @@
 
 ## Week 8 — Reproduction & solution planning
 
-**Reproduction commit link:** [\[link to commit documenting the reproduced issue\]](https://github.com/chase-b04/pathreview/commit/70fe02306131bf7eec7e3720de0dc789a046aabb)
+**Reproduction commit link:** https://github.com/chase-b04/pathreview/commit/b25442f3bc59edc077403949b71af8ac60ecd90d
 
 **Reproduction summary:**
 [1–2 sentences: How did you reproduce the issue? What did you observe?]
