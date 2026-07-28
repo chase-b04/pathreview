@@ -64,3 +64,22 @@ Is the scope realistic for Weeks 8–9?
 Are there any blockers or dependencies?
 
 - My issue does not claim to have any blockers or dependencies.
+
+## Week 8 — Reproduction
+
+This issue is a feature gap (no dependency vulnerability scan exists), not a runtime bug, so "reproducing" it means confirming exactly what's missing and proving the gap is exploitable right now with real data.
+
+**Where the gap lives:**
+
+- [.github/workflows/ci.yml](.github/workflows/ci.yml) defines 5 jobs (`lint`, `typecheck`, `test-unit`, `test-integration`, `frontend`) and none of them run `pip-audit` or `npm audit`. There is no `security`/`audit` job, no `dependabot.yml`, and no vulnerability-scanning tooling anywhere in the repo (confirmed via a repo-wide grep for `audit|dependabot|trivy|snyk|safety`).
+- [pyproject.toml](pyproject.toml) `[project.optional-dependencies].dev` has no `pip-audit` entry, so it isn't even installed for the `typecheck`/`test-*` jobs to piggyback on.
+- Net effect: a PR that introduces a vulnerable dependency currently passes CI with no signal at all.
+
+**Proof the gap is live (not hypothetical) — run locally today:**
+
+1. Frontend: `cd frontend && npm audit --json`
+   - Result: **11 vulnerable packages** — 1 critical (`vitest`), 5 high (`form-data`, `picomatch`, `postcss`, `vite`, `ws`), 4 moderate, 1 low. None of this surfaces anywhere in CI today (the `frontend` job only runs `npm ci` + `npm test`).
+2. Backend: installed `pip-audit` into a scratch venv and ran `pip-audit .` (audits `pyproject.toml`'s resolved dependency set) from the repo root.
+   - Result: **2 known vulnerabilities** — `chromadb` (`PYSEC-2026-311`) and `ecdsa` (`PYSEC-2026-1325`, pulled in transitively), exit code 1 (`pip-audit` fails the process on findings, which is exactly the signal a CI job needs to gate on).
+
+Both commands are reproducible by anyone with Node/Python installed and require no code changes — they demonstrate the exact failure mode the issue describes: real, currently-undetected vulnerabilities flowing straight through CI. The fix is to add a `security-scan` (or similar) job to `ci.yml` that runs both commands on `pull_request`/`push` to `main` and fails the build on high/critical findings.
