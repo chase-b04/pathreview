@@ -47,19 +47,19 @@ What's slowing me down is that when I run "make check," 53 errors appear, it use
 
 ### Check-in 2 (end of week)
 
-**PR link:** [link to your submitted pull request]
+**PR link:** https://github.com/ascherj/pathreview/pull/886
 
-**Branch:** [the branch name you worked on, e.g. `fix/123-short-description`]
+**Branch:** Fix/128 add a dependency vulnerability scan to the ci pipeline - #886
 
 **What you built:**
-[1–3 sentences summarizing what your fix does and how it works]
+Added a security-scan CI job that runs pip-audit and npm audit on every PR and push to main, fails the build on real vulnerability findings, and posts the results as a PR comment. The backend scan ignores two vulnerabilities that have no available fix upstream (documented in the Makefile), and the frontend scan only fails on high or critical severity so moderate/low findings do not make CI permanently red.
 
 **Tests added or updated:**
-[Which test files did you touch? What do they cover?]
+No new automated tests were added for the scan itself. This repo has no existing pattern for unit testing GitHub Actions workflow files, everything in tests/unit/ tests Python classes and functions, not CI config. Instead I verified it by running make audit-backend and make audit-frontend locally against real dependencies, and the real verification will happen when the job actually runs on this PR (job passes/fails correctly, comment appears). Separately, I updated tests/unit/test_tech_detector.py to remove 7 unused variable assignments flagged by the linter. That was a lint cleanup, not new coverage.
 
-**Self-review confirmation:** [ ] make check passes [ ] make test-unit passes
+**Self-review confirmation:** [x] make check passes [x] make test-unit passes
 
-**Draft PR feedback received from:** [name or Slack handle, or "none"]
+**Draft PR feedback received from:** None, I asked in the slack and got no responses.
 
 # Section Notes
 
