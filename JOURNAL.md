@@ -30,6 +30,37 @@ I reproduced this bug by first running cd frontend and then npm audit, this read
 **Blockers or open questions:**
 My current blockers are potentially needing to change too many unrelated files that will either get struck down by the PR reviewer, or if I only send in the relevantely changed files, then will it work in the main repo once pulled?
 
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+What I have implemented so far is the backend and frontend scans in the ci.yml file, adding a scan for both that will run every time the github action is called during pull request merges. The two commands I wrote for usability and testing are make audit-backend and make audit-frontend.
+
+**Next steps:**
+I will spend the rest of the week on testing and verifying that my program works and that it is ready for a success code review and pull request merge.
+
+**Blockers:**
+What's slowing me down is that when I run "make check," 53 errors appear, it used to be 172. I am working with Claude right now to figure this out in my setup and see whats wrong, as it seems to be a setup error and not a issue fix error.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** [link to your submitted pull request]
+
+**Branch:** [the branch name you worked on, e.g. `fix/123-short-description`]
+
+**What you built:**
+[1–3 sentences summarizing what your fix does and how it works]
+
+**Tests added or updated:**
+[Which test files did you touch? What do they cover?]
+
+**Self-review confirmation:** [ ] make check passes [ ] make test-unit passes
+
+**Draft PR feedback received from:** [name or Slack handle, or "none"]
+
 # Section Notes
 
 ## Part 1 — Understanding the Issue

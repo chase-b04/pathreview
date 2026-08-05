@@ -49,3 +49,10 @@ Open `.github/workflows/ci.yml` and look for the `security-scan` job. Check:
 ## 6. One thing you can't fully test locally
 
 The PR-comment step only runs on a real `pull_request` GitHub Actions event — it can't be tested from your machine. Once this branch is pushed and a PR is opened, check the Actions tab and confirm a comment actually shows up.
+
+## 7. Unrelated-looking files you'll also see in this branch
+
+Not part of the vulnerability scan itself, but bundled in — these fix `make run`, which was broken before this branch:
+
+- **`scripts/run_dev.py`** (new file) — used by the Makefile's `run` target to start the backend (`uvicorn`) and frontend (`npm run dev`) together as one command, and shut both down cleanly on Ctrl+C. Replaces an old inline bash background-job one-liner.
+- **`api/routes/health.py`** — two small fixes: wraps the raw `"SELECT 1"` string in SQLAlchemy's `text()` (required as of SQLAlchemy 2.x, which rejects bare strings), and builds the Redis client with `redis.Redis.from_url(settings.redis_url)` instead of `settings.redis_host`/`settings.redis_port`, which don't exist on the `Settings` class.
