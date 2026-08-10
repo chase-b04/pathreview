@@ -61,6 +61,39 @@ No new automated tests were added for the scan itself. This repo has no existing
 
 **Draft PR feedback received from:** None, I asked in the slack and got no responses.
 
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [x] Yes [] No — still awaiting review
+
+**Summary of feedback:**
+I recieved feedback from a CodePath Mentor during Thursday's meeting. The positive parts of my feedback include going beyond my scope in a good way, fixing a make run issue gating npm audit to high/critical so CI doesn't stay permanently red, documenting the ignore-list for unfixable CVEs with clear rationale, and framing scans that are expected to fail as a feature. The constructive feedback first was to make sure that TOREVIEWER.md wasn't deleted for the final draft, as I had deleted it for the final draft, but the mentor who reviewed my PR said to add it back. I also needed to confirm the PR-comment step actually fires in Actions since I couldn't test it locally.
+
+**How you responded:**
+How I responded was I added TOREVIEWER.md back to next commit that will go with my reflection for week 10's push, as well as double checkign the PR-comment step firing action. Otherwise, I took the positive feedback nicely and am excited to continue PRs at a similar level.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Proving the gap was harder than describing it. Adding a security scan that would run on npm audit sounded easy enough, but actually knowing the tools, github action usecases, and wiring of of my github actions to the entire program and npm and pip was a little more complicated than expected. I also had issues when it came to processing that trying to show code errors where actually a good thing and a feature of my program. Finally, and honestly my biggest issue, was just figuring out the Make File and the setup, as I had to change it around multiple times throughout the few weeks, and had to avoid submitting any setupchanges that werent mandatory in my fix.
+
+**What did you learn about working in a large codebase?**
+I learned to read the existing patterns before adding anything new. Before touching ci.yml, I had to understand how the other jobs were structured and how eval.yml already posts PR comments with actions/github-script, since my new job should follow that same convention instead of inventing its own style. I also had to be careful about scope. There were unrelated uncommitted changes sitting in the repo that had nothing to do with my issue, and I had to leave those alone rather than assume I could touch or commit them.
+
+**How did AI tools help — and where did they fall short?**
+AI was most useful for speed, such as locating the right workflow file, running and summarizing audit tool output, and structuring the plan into concrete sections. It fell short on boundaries around git. It committed changes on my behalf without asking first, which I had to correct and then undo. That was a good reminder that I need to stay the one deciding when something actually gets committed or pushed.
+
+**What would you do differently if you started over?**
+I would decide on a severity threshold and an ignore/allowlist strategy before writing any workflow YAML, since I found vulnerabilities that don't have fixes available yet. Without a plan for that upfront, the job would either be too noisy or too lenient. I'd also set expectations earlier about what I want an AI assistant to do versus what I want to do myself, especially around git actions.
+
+**What are you most proud of from this module?**
+Having real and measurable evidence for the issue instead of a hypothetical description. Being able to say "here are 11 real vulnerable packages and 2 real CVEs that CI currently misses" made the whole issue concrete.
+
+---
+
 # Section Notes
 
 ## Part 1 — Understanding the Issue

@@ -22,6 +22,7 @@ git checkout fix/128-add-a-dependency-vulnerability-scan-to-the-ci-pipeline
 pip install -e ".[dev]"
 make audit-backend
 ```
+
 ```bash
 cd frontend
 npm ci
@@ -36,7 +37,7 @@ make audit-frontend
 Open `.github/workflows/ci.yml` and look for the `security-scan` job. Check:
 
 - [ ] **Ignore list** — two backend vulnerabilities (`PYSEC-2026-311`, `PYSEC-2026-1325`) are explicitly ignored via `--ignore-vuln`. The Makefile has a comment above `audit-backend` explaining why (no fix available upstream). Does that reasoning make sense to you?
-- [ ] **Severity threshold** — frontend uses `npm audit --audit-level=high`, so only high/critical findings fail the build (moderate/low are logged but don't block). Backend's `pip-audit` fails on anything *not* in the ignore list. Reasonable split?
+- [ ] **Severity threshold** — frontend uses `npm audit --audit-level=high`, so only high/critical findings fail the build (moderate/low are logged but don't block). Backend's `pip-audit` fails on anything _not_ in the ignore list. Reasonable split?
 - [ ] **PR comment step** — on every PR, a bot comment should post both scans' results (truncated if huge). Job continues past a failing scan just long enough to post this comment, then fails at the end.
 - [ ] **Failure gating** — the last step in the job checks both scans' exit codes and fails the job if either found something. Make sure this logic makes sense: `.github/workflows/ci.yml`, step named "Fail if vulnerabilities were found".
 
